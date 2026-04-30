@@ -171,10 +171,10 @@ function runLayout(cy) {
 }
 
 function nodeColor(level, type) {
-  if (type === 'document') return 'var(--node-doc)'
-  if (level === 1) return 'var(--node-l1)'
-  if (level === 2) return 'var(--node-l2)'
-  return 'var(--node-l3)'
+  if (type === 'document') return '#f0a500'
+  if (level === 1) return '#3ddc84'
+  if (level === 2) return '#4a9eff'
+  return '#8b6fff'
 }
 
 // ---------------------------------------------------------------------------
