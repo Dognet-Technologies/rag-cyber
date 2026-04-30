@@ -1,0 +1,74 @@
+/* ------------------------------------------------------------------ */
+/* Design system — LLMWiki / SentinelSuite                             */
+/* Tema: terminal industriale. Nero profondo, verde ossidiana, accenti  */
+/* ambra. Tipografia monospace + display geometrico.                   */
+/* ------------------------------------------------------------------ */
+
+:root {
+  /* Palette */
+  --bg-base:        #080b0f;
+  --bg-surface:     #0d1117;
+  --bg-elevated:    #131920;
+  --bg-hover:       #1a2330;
+  --border:         #1e2d3d;
+  --border-bright:  #2a3f55;
+
+  --text-primary:   #c9d8e8;
+  --text-secondary: #5a7a96;
+  --text-dim:       #334455;
+
+  --accent-green:   #3ddc84;
+  --accent-amber:   #f0a500;
+  --accent-red:     #e05252;
+  --accent-blue:    #4a9eff;
+
+  /* Grafo — colori per livello heading */
+  --node-l1:        #3ddc84;
+  --node-l2:        #4a9eff;
+  --node-l3:        #8b6fff;
+  --node-doc:       #f0a500;
+
+  /* Tipografia */
+  --font-mono:    'JetBrains Mono', monospace;
+  --font-display: 'Syne', sans-serif;
+
+  /* Spacing */
+  --radius:   4px;
+  --radius-lg: 8px;
+
+  /* Transizioni */
+  --transition: 150ms ease;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body, #root {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+body {
+  background: var(--bg-base);
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Scrollbar personalizzata */
+::-webkit-scrollbar { width: 4px; height: 4px; }
+::-webkit-scrollbar-track { background: var(--bg-surface); }
+::-webkit-scrollbar-thumb { background: var(--border-bright); border-radius: 2px; }
+::-webkit-scrollbar-thumb:hover { background: var(--text-secondary); }
+
+/* Selezione testo */
+::selection {
+  background: rgba(61, 220, 132, 0.2);
+  color: var(--accent-green);
+}

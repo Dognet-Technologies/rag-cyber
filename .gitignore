@@ -1,0 +1,74 @@
+# ============================================================
+# LLMWiki / SentinelSuite — .gitignore
+# ============================================================
+
+# --- Virtualenv Python ---
+venv/
+.venv/
+env/
+.env/
+
+# --- Database e dati persistenti ---
+data/chroma_db/
+docker/neo4j/data/
+docker/neo4j/logs/
+docker/neo4j/plugins/
+
+# --- Dati di training e staging (voluminosi) ---
+data/pdf_staging/
+data/md_staging/
+data/datasets/
+
+# --- Dataset esterni (clonati via git) ---
+data/mitre-cti/
+data/hackerone-reports/
+data/learn365/
+data/Awesome-Bugbounty-Writeups/
+
+# --- Log ---
+logs/
+*.log
+nohup.out
+
+# --- Python cache ---
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# --- Node / Frontend ---
+frontend/node_modules/
+frontend/dist/
+frontend/.vite/
+
+# --- Variabili d'ambiente e secrets ---
+.env
+.env.*
+!.env.example
+
+# --- Editor e OS ---
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# --- Modelli ML scaricati localmente ---
+*.bin
+*.safetensors
+*.gguf
+*.ggml
+models/
+
+# --- Output temporanei ---
+*.tmp
+*.bak
+tmp/
+temp/

@@ -1,0 +1,73 @@
+version: "3.9"
+
+# ---------------------------------------------------------------------------
+# LLMWiki stack — uso locale Samsung RTX 4050
+#
+# Servizi:
+#   neo4j    — graph database, porta bolt 7687 + browser 7474
+#   frontend — interfaccia web (React/Vue), porta 3000
+#
+# Il backend Python (FastAPI + venv) gira sull'host, NON in Docker.
+# I container comunicano con il backend via http://host.docker.internal:8000
+#
+# Avvio:   docker compose up -d
+# Stop:    docker compose down
+# Dati:    i volumi Neo4j persistono in ./docker/neo4j/
+# ---------------------------------------------------------------------------
+
+services:
+
+  # -------------------------------------------------------------------------
+  # Neo4j Community Edition
+  # -------------------------------------------------------------------------
+  neo4j:
+    image: neo4j:5.18-community
+    container_name: llmwiki_neo4j
+    restart: unless-stopped
+    ports:
+      - "7474:7474"   # Neo4j Browser (http://localhost:7474)
+      - "7687:7687"   # Bolt protocol — usato dal backend Python
+    environment:
+      NEO4J_AUTH: "neo4j/llmwiki_local"   # deve corrispondere a NEO4J_PASSWORD in settings.py
+      NEO4J_PLUGINS: '["apoc"]'           # APOC utilities — utile per traversal avanzati (fase 2)
+      NEO4J_dbms_memory_pagecache_size: "512M"
+      NEO4J_dbms_memory_heap_max__size: "1G"
+      NEO4J_dbms_security_procedures_unrestricted: "apoc.*"
+    volumes:
+      - ./docker/neo4j/data:/data
+      - ./docker/neo4j/logs:/logs
+      - ./docker/neo4j/plugins:/plugins
+    healthcheck:
+      test: ["CMD", "neo4j", "status"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 60s   # Neo4j è lento all'avvio
+
+  # -------------------------------------------------------------------------
+  # Frontend
+  # Placeholder — verrà sostituito con il Dockerfile reale del frontend
+  # quando Simone condividerà il design dell'interfaccia.
+  # -------------------------------------------------------------------------
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: llmwiki_frontend
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      # URL del backend FastAPI sull'host — host.docker.internal risolve
+      # automaticamente all'IP dell'host su Docker Desktop (Linux/Mac/Win)
+      VITE_API_URL: "http://host.docker.internal:8000"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"   # necessario su Linux
+    depends_on:
+      neo4j:
+        condition: service_healthy
+
+# ---------------------------------------------------------------------------
+# Volumi nominati — non usati (i volumi sono bind mount su ./docker/)
+# I bind mount facilitano backup e ispezione diretta dei dati.
+# ---------------------------------------------------------------------------
