@@ -1,4 +1,4 @@
-# LLMWiki / SentinelSuite — Guida di installazione completa
+# LLMWiki / "Addrestrare Nina" — Guida di installazione completa
 
 ## Prerequisiti di sistema
 
